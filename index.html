@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Form Input</h2>
+<form action="input.php" onsubmit="return validateForm(event)" method="post">
+    <label for="kecamatan">Kecamatan:</label><br>
+    <input type="text" id="kecamatan" name="kecamatan" required><br>
+
+    <label for="luas">Luas:</label><br>
+    <input type="number" step="any" id="luas" name="luas" value="" required><br>
+
+    <label for="jumlah_penduduk">Jumlah Penduduk:</label><br>
+    <input type="number" step="any" id="jumlah_penduduk" name="jumlah_penduduk" value="" required><br>
+
+    <label for="longitude">Longitude:</label><br>
+    <input type="number" step="any" id="longitude" name="longitude" value="" required><br>
+
+    <label for="latitude">Latitude:</label><br>
+    <input type="number" step="any" id="latitude" name="latitude" value="" required><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<p id="informasi" style="color: red;"></p>
+
+<script>
+function validateForm(event) {
+    let luas = document.getElementById("luas").value;
+    let jumlahPenduduk = document.getElementById("jumlah_penduduk").value;
+    let longitude = document.getElementById("longitude").value;
+    let latitude = document.getElementById("latitude").value;
+    let text = "";
+
+    // Validasi input kosong
+    if (!luas || !jumlahPenduduk || !longitude || !latitude) {
+        text = "Semua kolom harus diisi.";
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault(); // Mencegah form disubmit
+        return false;
+    }
+
+    // Validasi input luas
+    if (isNaN(parseFloat(luas)) || parseFloat(luas) <= 0) {
+        text = "Data luas harus angka dan tidak boleh bernilai negatif.";
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault();
+        return false;
+    }
+
+    // Validasi input jumlah penduduk
+    if (isNaN(parseFloat(jumlahPenduduk)) || parseFloat(jumlahPenduduk) < 0) {
+        text = "Jumlah penduduk harus angka dan tidak boleh bernilai negatif.";
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault();
+        return false;
+    }
+
+    // Validasi input longitude
+    if (isNaN(parseFloat(longitude))) {
+        text = "Longitude harus berupa angka.";
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault();
+        return false;
+    }
+
+    // Validasi input latitude
+    if (isNaN(parseFloat(latitude))) {
+        text = "Latitude harus berupa angka.";
+        document.getElementById("informasi").innerHTML = text;
+        event.preventDefault();
+        return false;
+    }
+
+    return true; // Jika semua validasi lolos, form dapat disubmit
+}
+</script>
+
+</body>
+</html>
